@@ -164,7 +164,7 @@ class TransformerEncoder(layers.Layer):
         
         self.dropout = layers.Dropout(dropout_rate)
     
-    def call(self, x, training=False, mask=None):
+    def call(self, x, training=None, mask=None):
         seq_len = tf.shape(x)[1]
         
         # Embedding + positional encoding
@@ -213,7 +213,7 @@ def create_transformer_classifier(vocab_size, max_length, num_classes,
         dropout_rate=dropout_rate
     )
     
-    x = encoder(inputs, training=True)
+    x = encoder(inputs)
     
     # Global average pooling
     x = layers.GlobalAveragePooling1D()(x)

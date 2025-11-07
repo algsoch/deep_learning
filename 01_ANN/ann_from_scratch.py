@@ -11,6 +11,10 @@ class NeuralNetwork:
     A simple feedforward neural network with one hidden layer
     """
     
+    # Constants for numerical stability
+    SIGMOID_CLIP_MIN = -500
+    SIGMOID_CLIP_MAX = 500
+    
     def __init__(self, input_size, hidden_size, output_size, learning_rate=0.01):
         """
         Initialize the neural network with random weights
@@ -30,8 +34,8 @@ class NeuralNetwork:
         self.b2 = np.zeros((1, output_size))
         
     def sigmoid(self, x):
-        """Sigmoid activation function"""
-        return 1 / (1 + np.exp(-np.clip(x, -500, 500)))
+        """Sigmoid activation function with clipping for numerical stability"""
+        return 1 / (1 + np.exp(-np.clip(x, self.SIGMOID_CLIP_MIN, self.SIGMOID_CLIP_MAX)))
     
     def sigmoid_derivative(self, x):
         """Derivative of sigmoid function"""
